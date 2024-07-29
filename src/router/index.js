@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import StartView from '../views/StartView.vue'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import MineView from '../views/MineView.vue'
@@ -7,6 +8,12 @@ import RatingView from '../views/RatingView.vue'
 
 
 const routes = [
+    {
+        path: '/',
+        name: 'start',
+        component: StartView,
+        meta: { requiresAuth: false }
+    },
     {
         path: '/login',
         name: 'login',

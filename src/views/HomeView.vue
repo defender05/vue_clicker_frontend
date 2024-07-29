@@ -1,15 +1,133 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex';
+
+const store = useStore();
+const user_name = ref('');
+const user_avatar = ref('');
+const user_balance = ref(0);
+const user_capacity = ref(0);
+
+
+onMounted(async () => {
+    await store.dispatch('fetchUser', { tg_id: "1347962579" }); // ВРЕМЕННО - УДАЛИТЬ
+    let user = await store.getters.getUserData;
+    console.log('User image_url:', user.country.image_url);
+
+    user_name.value = `${user.first_name} ${user.last_name}`; 
+    user_avatar.value = user.country.image_url;
+    user_balance.value = user.game_balance;
+    user_capacity.value = user.total_capacity;
+    // console.log("UserData", JSON.stringify(user));
+    
+});
 
 </script>
 
 <template>
-    <div class="content">
-        
+    <div class="home_content">
+
+        <div class="user_info flex_row">
+            <img :src="user_avatar" class="avatar_image">
+            <span class="user_name">{{ user_name }}</span>
+            <img src="../assets/user_edit.svg" class="user_edit_image">
+        </div>
+
+        <div class="main_info flex_row">
+            <div class="flex_col" style="width: 100%;">
+                <div class="balance_row flex_row">
+                    <span class="user_game_balance">{{ user_balance.toLocaleString() }}</span>
+                    <img src="../assets/coin.svg" class="balance_coin_image">
+                </div>
+
+                <div class="flex_row">
+                    <span style="color: #FFFFFF; font-weight: 100;">Баланс</span>
+                </div>
+
+                <div class="stat_row flex_row">
+                    <div class="stat_box flex-col">
+                        <div class="flex_row"><span class="stat_box_number">{{ user_capacity }}</span><span class="stat_box_unit">т/с</span></div>
+                        <span class="stat_box_title">Производительность</span>
+                    </div>
+                    <div class="stat_box flex-col">
+                        <div><span class="stat_box_number">{{ 12000 }}+</span></div>
+                        <div><span class="stat_box_title">Место в рейтинге</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </template>
 
 <style scoped>
+.home_content {
+    display: flex;
+    flex-direction: column;
+    padding: 0% 5%;
+}
 
+/* СТРОКА - Имя и ватарка юзера */
+.user_info {
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.user_name {
+    color:rgb(255, 255, 255);
+    margin-right: auto;
+}
+.avatar_image {
+    width: 100px;
+    height: 100px;
+}
+.user_edit_image {
+    width: 35px;
+    height: 35px;
+}
+
+/* СТРОКА - Баланс, место в рейтинге и производительность */
+.main_info {
+    background-color: #0C0C0C;
+    border: 1px solid #1F1F1F;
+    border-radius: 10px;
+    padding: 10px;
+}
+.balance_row {
+    align-items: center;
+}
+.user_game_balance {
+    font-size: 2em;
+    color: #FF7618;
+    margin-right: 10px;
+}
+.balance_coin_image {
+    width: 25px;
+    height: 25px;
+}
+.stat_row {
+    margin-top: 10px;
+    justify-content: space-between;
+}
+.stat_box {
+    width: 100%;
+    background-color: #0C0C0C;
+    border: 1px solid #1F1F1F;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.stat_box_title {
+    font-size: 0.7em;
+    color: #6B6B6B;
+}
+.stat_box_number {
+    font-size: 1.2em;
+    color: #ffffff;
+    margin-right: 5px;
+}
+.stat_box_unit {
+    font-size: 1.2em;
+    color: #FF7618;
+}
 </style>

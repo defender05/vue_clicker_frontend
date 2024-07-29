@@ -57,8 +57,6 @@
                         v-model:show="showPicker"
                         :actions="columns" 
                         @select="onSelect"
-                        @confirm="onConfirm"
-                        @change="onChange" 
                      />
                     <!-- <van-picker
                         title="Список стран"
@@ -82,10 +80,12 @@
 
 <script setup>
 import { ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { showToast } from 'vant';
 // import Select from 'primevue/select';
 
+const router = useRouter();
 const store = useStore();
 
 const selectedCountry = ref();
@@ -102,12 +102,13 @@ const prime_countries = ref([]);
 //     { name: 'United States', code: 'US' }
 // ]);
 
+let user = null;
 let countries = [];
 let columns = [];
 
 onBeforeMount(async () => {
     await store.dispatch('fetchCountries',
-     { offset: 0, limit: 100 }
+        { offset: 0, limit: 100 }
     );
     countries = await store.getters.getCountriesData;
     console.log("Countries", countries);
@@ -129,6 +130,8 @@ onBeforeMount(async () => {
         // });
     }
     console.log("Columns", columns);
+
+   
 });
 
 
@@ -137,18 +140,24 @@ const result = ref('');
 const showPicker = ref(false);
 
 const onSelect = (item) => {
-    show.value = false;
+    result.value = item.name;
     showToast(item.name);
-};
-
-const onConfirm = ({ selectedOptions }) => {
-    result.value = selectedOptions[0]?.text;
     showPicker.value = false;
 };
 
-const onChange = ({ selectedValues }) => {
-    showToast(`Value: ${selectedValues.join(',')}`);
+const onSubmit = () => {
+    router.push('/home');
 };
+
+// const onConfirm = ({ selectedOptions }) => {
+//     result.value = selectedOptions[0]?.text;
+//     showPicker.value = false;
+    
+// };
+
+// const onChange = ({ selectedValues }) => {
+//     showToast(`Value: ${selectedValues.join(',')}`);
+// };
 
 
 </script>

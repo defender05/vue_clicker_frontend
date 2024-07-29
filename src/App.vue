@@ -36,7 +36,8 @@ const menu_items = ref([
 
 // Вычисляемое свойство для проверки, следует ли показывать tabbar
 const showTabbar = computed(() => {
-    return route.name !== 'login'; // Скрываем tabbar на странице логина
+    let state = route.name !== 'login' && route.name !== 'start';
+    return state; // Скрываем tabbar на странице логина
 });
 
 </script>

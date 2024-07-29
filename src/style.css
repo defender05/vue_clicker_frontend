@@ -79,6 +79,15 @@ button:focus-visible {
   }
 }
 
+.flex_col {
+  display: flex;
+  flex-direction: column;
+}
+.flex_row {
+  display: flex;
+  flex-direction: row;
+}
+
 /* Стили для оверлеев должны переопределяться глобально,
  а не в самом компоненте */
 .p-select-label {

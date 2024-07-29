@@ -21,7 +21,7 @@ const store = createStore({
 
     async fetchUser({ commit }, payload) {
       try {
-        const { data } = await axios.get(`user/tg/${payload.tg_id}`);
+        const { data } = await axios.get(`user/get/tg/${payload.tg_id}`);
         console.log(data);
         commit('setUserData', data);
       } catch (error) { console.error(error); }
@@ -30,7 +30,7 @@ const store = createStore({
     async fetchCountries({ commit }, payload) {
       try {
         const { data } = await axios.post('countries/list', {params: payload});
-        console.log(data);
+        // console.log(data);
         commit('setCountriesData', Array.from(data));
       } catch (error) { console.error(error); }
     },
