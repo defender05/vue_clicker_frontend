@@ -23,8 +23,8 @@ const numberStyle = ref({
     position: 'absolute',
     left: `${props.initialPosition.x}px`,
     top: `${props.initialPosition.y}px`,
-    transition: 'transform 1s ease, opacity 1s ease',
-    transform: 'translateY(-100px)',
+    transition: 'translateY 1s ease, opacity 1s ease',
+    transform: 'translateY(-10px)',
     opacity: 1
 });
 
@@ -45,5 +45,18 @@ onMounted(() => {
 .number {
     font-size: 24px;
     color: #ffcc00; /* Цвет цифр */
+    animation: up 1s linear ease-in; /* Примените анимацию */
+    user-select: none; /* Запретить выделение текста */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+@keyframes up {
+    from {
+        transform: translateY(-10px); 
+    }
+    to {
+        transform: translateY(-100px);
+    }
 }
 </style>
