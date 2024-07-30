@@ -1,5 +1,82 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+/* @font-face {
+  font-family: 'SFProDisplay';
+  src:url('@/assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYBOLD.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYREGULAR.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYTHINITALIC.OTF') format('otf'),
+      url('@/assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF') format('otf');
+  font-weight: normal;
+  font-style: normal;
+} */
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
+  font-weight: 900; /* Black */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
+  font-weight: 800; /* Heavy */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF') format('opentype');
+  font-weight: 300; /* Light */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('opentype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF') format('opentype');
+  font-weight: 600; /* SemiBold */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYTHINITALIC.OTF') format('opentype');
+  font-weight: 100; /* Thin */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('../src/assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF') format('opentype');
+  font-weight: 200; /* UltraLight */
+  font-style: italic;
+}
+
+/* :root {
+  font-family: SFProDisplay;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,7 +88,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+} */
+:root:root {
+  --van-base-font: SFProDisplay;
 }
+
 
 a {
   font-weight: 500;
