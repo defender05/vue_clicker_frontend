@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -9,7 +9,7 @@ const user_balance = ref(0);
 const user_capacity = ref(0);
 
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await store.dispatch('fetchUser', { tg_id: "1347962579" }); // ВРЕМЕННО - УДАЛИТЬ
     let user = await store.getters.getUserData;
     console.log('User image_url:', user.country.image_url);
@@ -29,10 +29,6 @@ onMounted(async () => {
     <div class="home_content">
 
         <div class="user_info flex_row">
-            <!-- <van-image
-                :src="user_avatar"
-                class="avatar_image"
-            /> -->
             <div class="image_container">
                 <img v-if="user_avatar" :src="user_avatar" class="avatar_image">
                 <van-skeleton v-else title avatar :row="0" />
@@ -126,7 +122,7 @@ onMounted(async () => {
     /* justify-content: space-between; */
 }
 .user_game_balance {
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: 500;
     color: #FF7618;
     margin-right: 10px;
@@ -137,8 +133,8 @@ onMounted(async () => {
     font-weight: 100;
 }
 .balance_coin_image {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
 }
 .stat_row {
     margin-top: 10px;

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import StartView from '../views/StartView.vue'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
-import MineView from '../views/MineView.vue'
+import ClickerView from '../views/ClickerView.vue'
 import ShopView from '../views/ShopView.vue'
 import RatingView from '../views/RatingView.vue'
 
@@ -27,9 +27,9 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/mine',
-        name: 'mine',
-        component: MineView,
+        path: '/clicker',
+        name: 'clicker',
+        component: ClickerView,
         meta: { requiresAuth: true }
     },
     {

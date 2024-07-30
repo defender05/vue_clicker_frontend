@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import TabBar from './components/TabBar.vue';
 
 const router = useRouter();
 const route = useRoute(); // Получаем текущий маршрут
@@ -17,7 +17,7 @@ const menu_items = ref([
     {
         label: 'Кликер',
         command: () => {
-            router.push('/mine');
+            router.push('/clicker');
         }
     },
     {
@@ -50,38 +50,7 @@ const showTabbar = computed(() => {
     <div id="content"><router-view /></div>
 
     <div id="footer">
-      
-      <van-tabbar v-show="showTabbar" v-model="active" class="menu_bar">
-    
-        <van-tabbar-item to="/home" class="menu_bar_item">
-          <div class="flex_col">
-            <div><img src="./assets/home.svg" alt="" class="menu_item_img"></div>
-            <div class="menu_item_text">Главная</div>
-          </div>
-        </van-tabbar-item>
-
-        <van-tabbar-item to="/mine" class="menu_bar_item">
-          <div class="flex_col">
-            <div><img src="./assets/clicker.svg" alt="" class="menu_item_img"></div>
-            <div class="menu_item_text">Кликер</div>
-          </div>
-        </van-tabbar-item>
-
-        <van-tabbar-item to="/shop" class="menu_bar_item">
-          <div class="flex_col">
-            <div><img src="./assets/shop.svg" alt="" class="menu_item_img"></div>
-            <div class="menu_item_text">Магазин</div>
-          </div>
-        </van-tabbar-item>
-
-        <van-tabbar-item to="/rating" class="menu_bar_item">
-          <div class="flex_col">
-            <div><img src="./assets/rating.svg" alt="" class="menu_item_img"></div>
-            <div class="menu_item_text">Рейтинг</div>
-          </div>
-        </van-tabbar-item>
-      </van-tabbar>
-
+      <TabBar v-show="showTabbar"/>
     </div>
   </div>
 </template>
@@ -109,7 +78,8 @@ const showTabbar = computed(() => {
 .menu_item_img {
   height: 25px;
   width: 25px;
-  color: #ffffff;
+  color: var(--svg-color, #868686);
+  --svg-color: #868686;
 }
 .menu_item_text {
   color: #868686;
@@ -122,7 +92,13 @@ const showTabbar = computed(() => {
 }
 .menu_bar_item:focus {
   background-color: #000000;
+}
+.menu_bar_item:focus div{
   color:#FF7618;
+}
+.menu_bar_item:focus .menu_item_img{
+  color:#FF7618;
+  --svg-color: #FF7618;
 }
 
 
