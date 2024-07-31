@@ -58,13 +58,12 @@ const showTabbar = computed(() => {
 
 <style scoped>
 .container {
-  
   width: 100%;
-  height: 100%;
-}
-.content {
-  z-index: 0;
   height: 100vh;
+}
+#content {
+  /* z-index: 0; */
+  height: 100%;
 }
 /* :root:root {
   --van-tabbar-height: 100px;

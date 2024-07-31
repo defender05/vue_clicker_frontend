@@ -18,6 +18,10 @@ onBeforeMount(async () => {
     user_avatar.value = user.country.image_url;
     user_balance.value = user.game_balance;
     user_capacity.value = user.total_capacity;
+
+    store.commit('setCapacity', user.total_capacity);
+    store.commit('setBalance', user.game_balance);
+    store.commit('setEnergy', user.energy)
     
     // console.log("UserData", JSON.stringify(user));
     

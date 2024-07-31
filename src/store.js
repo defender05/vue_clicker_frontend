@@ -6,6 +6,9 @@ const store = createStore({
   state: {
     UserData: Object,
     CountriesData: [],
+    capacity: 0,
+    gdp_balance: 0,
+    energy: 0,
   },
 
   mutations: {
@@ -14,6 +17,18 @@ const store = createStore({
     },
     setCountriesData(state, data) {
       state.CountriesData = data;
+    },
+    setCapacity(state, data) {
+      state.capacity = data;
+    },
+    setBalance(state, data) {
+      state.gdp_balance = data;
+    },
+    increaseBalance(state, data) {
+      state.gdp_balance += data;
+    },
+    setEnergy(state, data) {
+      state.energy = data;
     },
   },
 
@@ -40,6 +55,9 @@ const store = createStore({
   getters: {
     getUserData: state => state.UserData,
     getCountriesData: state => state.CountriesData,
+    getCapacity: state => state.capacity,
+    getBalance: state => state.gdp_balance,
+    getEnergy: state => state.energy,
   }
 });
 

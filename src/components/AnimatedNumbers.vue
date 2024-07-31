@@ -1,9 +1,9 @@
 <template>
-    <div class="number" :style="numberStyle">{{ number }}</div>
+    <span :class="['number', { 'fade-out': isFading }]" :style="numberStyle">{{ number }}</span>
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 
 const emit = defineEmits(['remove'])
 
@@ -23,9 +23,11 @@ const numberStyle = ref({
     position: 'absolute',
     left: `${props.initialPosition.x}px`,
     top: `${props.initialPosition.y}px`,
-    transition: 'translateY 1s ease, opacity 1s ease',
-    transform: 'translateY(-10px)',
-    opacity: 1
+    transition: 'opacity 1s ease',
+    transform: 'translateY(10px)',
+    opacity: 1,
+    '--initial-x': `${props.initialPosition.x}px`,
+    '--initial-y': `${props.initialPosition.y}px`,
 });
 
 onMounted(() => {
@@ -45,18 +47,21 @@ onMounted(() => {
 .number {
     font-size: 24px;
     color: #ffcc00; /* Цвет цифр */
-    animation: up 1s linear ease-in; /* Примените анимацию */
+    animation: up 1s linear ease-out; /* Примените анимацию */
     user-select: none; /* Запретить выделение текста */
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
 }
+
+.fade-out {
+    opacity: 0;
+    transition: all 1s ease;
+}
+
 @keyframes up {
-    from {
-        transform: translateY(-10px); 
-    }
     to {
-        transform: translateY(-100px);
+        transform: translateY(-200px);
     }
 }
 </style>
