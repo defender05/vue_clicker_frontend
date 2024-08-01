@@ -24,11 +24,20 @@ const store = createStore({
     setBalance(state, data) {
       state.gdp_balance = data;
     },
-    increaseBalance(state, data) {
-      state.gdp_balance += data;
+    increaseBalance(state) {
+      if (state.energy > 0) {
+        state.gdp_balance = state.gdp_balance + (state.capacity * 2);
+      }
     },
     setEnergy(state, data) {
       state.energy = data;
+    },
+    decreaseEnergy(state, data) {
+      if (state.energy > 0 && state.energy > data) {
+        state.energy -= data;
+      } else {
+        state.energy = 0;
+      }
     },
   },
 
@@ -44,9 +53,17 @@ const store = createStore({
 
     async fetchCountries({ commit }, payload) {
       try {
-        const { data } = await axios.post('countries/list', {params: payload});
+        const { data } = await axios.get('countries/list', {params: payload});
         // console.log(data);
         commit('setCountriesData', Array.from(data));
+      } catch (error) { console.error(error); }
+    },
+
+    async fetchUpdateGameBalance({ commit }, payload) {
+      try {
+        const { data } = await axios.patch(`user/updateGameBalance?tg_id=${payload.tg_id}&current_tap_count=${payload.current_tap_count}`);
+        console.log(`Updated balance: ${data.balance}`);
+        commit('setBalance', Array.from(data.balance));
       } catch (error) { console.error(error); }
     },
 

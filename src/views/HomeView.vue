@@ -10,19 +10,20 @@ const user_capacity = ref(0);
 
 
 onBeforeMount(async () => {
-    await store.dispatch('fetchUser', { tg_id: "1347962579" }); // ВРЕМЕННО - УДАЛИТЬ
+    //await store.dispatch('fetchUser', { tg_id: "1347962579" }); // ВРЕМЕННО - УДАЛИТЬ
     let user = await store.getters.getUserData;
     console.log('User image_url:', user.country.image_url);
 
     user_name.value = `${user.first_name} ${user.last_name}`; 
     user_avatar.value = user.country.image_url;
-    user_balance.value = user.game_balance;
-    user_capacity.value = user.total_capacity;
 
-    store.commit('setCapacity', user.total_capacity);
-    store.commit('setBalance', user.game_balance);
-    store.commit('setEnergy', user.energy)
-    
+    let store_balance = store.getters.getBalance;
+    let store_capacity = store.getters.getCapacity;
+
+    user_balance.value = (store_balance !== 0) ? store_balance : user.game_balance;
+    user_capacity.value = (store_capacity !== 0) ? store_capacity : user.total_capacity;
+
+
     // console.log("UserData", JSON.stringify(user));
     
 });

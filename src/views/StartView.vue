@@ -44,9 +44,13 @@ const store = useStore();
 let user = null;
 
 onBeforeMount(async () => {
-    await store.dispatch('fetchUser', { tg_id: "1347962579" });
+    await store.dispatch('fetchUser', { tg_id: "1001521242" });
     user = await store.getters.getUserData;
     console.log("UserData", JSON.stringify(user));
+
+    store.commit('setCapacity', user.total_capacity);
+    store.commit('setBalance', user.game_balance);
+    store.commit('setEnergy', user.energy)
 
     if (user.country == null) {
         router.push('/login');

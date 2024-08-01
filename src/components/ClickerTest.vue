@@ -48,6 +48,7 @@ const handleClick = (event) => {
 
   let capacity_value = store.getters.getCapacity;
   store.commit('increaseBalance', capacity_value);
+  user_balance.value = store.getters.getBalance;
 
   // Убираем элемент через 2 секунды
   setTimeout(() => {
@@ -84,6 +85,7 @@ const getPlusOneStyle = (position) => ({
   text-shadow: 0px 0px 4px rgba(234, 182, 64, 0.25);
   font-size: 24px;
   font-weight: 800;
+  user-select: none;
   background: linear-gradient(180deg, #e8c547 0%, #ef882b 100%);
   background-clip: text;
   -webkit-background-clip: text;
