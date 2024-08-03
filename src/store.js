@@ -75,7 +75,7 @@ const store = createStore({
       try {
         const { data } = await axios.patch(`user/updateGameBalance?tg_id=${payload.tg_id}&current_tap_count=${payload.current_tap_count}`);
         console.log(`Updated balance: ${data.balance}`);
-        commit('setBalance', Array.from(data.balance));
+        commit('setBalance', data.balance);
       } catch (error) { console.error(error); }
     },
 

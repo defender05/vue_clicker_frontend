@@ -158,7 +158,7 @@ const getPlusOneStyle = (position) => ({
 .clicker_content {
     position: relative;
     height: 100vh;
- 
+    background: radial-gradient(circle, #161515 0%, #000000 100%);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -178,15 +178,20 @@ const getPlusOneStyle = (position) => ({
     justify-content: center;
 }
 .user_game_balance {
+    font-family: ReadexPro;
     font-size: 2.5em;
     font-weight: 500;
-    color: #FF7618;
+    /* color: #FF7618; */
     margin-right: 10px;
+    background: -webkit-linear-gradient(#FF7618, #FF9900);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .balance_text {
     color: #5c5b5b;
     font-size: 1em;
     font-weight: 100;
+    
 }
 .balance_coin_image {
     width: 35px;

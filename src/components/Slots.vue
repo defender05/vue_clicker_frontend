@@ -7,9 +7,14 @@
         class="slot"
         @click="toggleEnterprise(index)"
       >
-        <img :src="slot.image" alt="Slot Image" class="enterprise_image" />
+      <div v-if="slot.image" class="enterprise_image_container">
+        <img v-if="slot.image" :src="slot.image" class="enterprise_image" />
+      </div>
+      <img v-else class="empty_slot" src="../assets/images/empty_slot.svg"/>
+
+
         <div v-if="slot.name" class="enterprise_name">{{ slot.name }}</div>
-        <div v-if="slot.capacity" class="enterprise_capacity">{{ slot.capacity }}</div>
+        <div v-if="slot.capacity" class="enterprise_capacity">{{ slot.capacity }} т/с</div>
       </div>
     </div>
 
@@ -67,12 +72,16 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, defineEmits, watchEffect } from 'vue';
+import { ref, defineEmits, watchEffect } from 'vue';
 import Modal from './Modal.vue';
 import slot_default_image from '../assets/images/empty_slot.svg';
 
 const props = defineProps({
   slotCount: {
+    type: Number,
+    default: 0,
+  },
+  enterprises_slots: {
     type: Number,
     default: 0,
   },
@@ -82,11 +91,12 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:slotCount']);
 
-const slots = ref(Array.from({ length: 10 }, () => ({
-      image: slot_default_image,
-      name: null,
-      capacity: null,
-  })));
+// const slots = ref(Array.from({ length: props.user_enterprises_slots }, () => ({
+//       image: null,
+//       name: null,
+//       capacity: null,
+//   })));
+const slots = ref([]);
 const buyEnterprisePopupState = ref(false);
 const removeEnterprisePopupState = ref(false);
 const isModalVisible = ref(false)
@@ -96,13 +106,29 @@ const isModalVisible = ref(false)
 // });
 watchEffect(() => {
   let ents = props.enterprises;
+  let slots_count = props.enterprises_slots;
+
+  console.log('Кол-во слотов:', slots_count);
   console.log('Данные предприятий обновлены:', ents);
+
   for (let item of ents) {
     slots.value.push({
       image: item.image_url,
       name: item.name,
       capacity: item.capacity,
     })
+  }
+
+  
+  if (ents.length < slots_count) {
+    let empty_slot_count = slots_count - ents.length;
+    for (let i = 0; i < empty_slot_count; i++) { 
+      slots.value.push({
+        image: null,
+        name: null,
+        capacity: null,
+      })
+    }
   }
 });
 
@@ -134,7 +160,11 @@ const showPurchaseModal = () => {
 
 const purchaseSlot = () => {
   if (slots.value.length < 15) {
-    slots.value.push({ image: slot_default_image, enterprise: null })
+    slots.value.push({ 
+      image: null,
+      name: null,
+      capacity: null, 
+    })
     emit('update:slotCount', slots.value.length);
   }
   isModalVisible.value = false
@@ -171,19 +201,26 @@ const toggleEnterprise = (index) => {
 }
 
 .slot {
-  width: 100%;
-  height: 120px;
+  width: calc(50% - 10px);
+  height: calc(190px - 10px);
   padding: 20px;
   /* border: 1px solid #1F1F1F; */
   border-radius: 10px;
   background-color: #121111;
   display: flex;
+
   flex: 1 1 calc(50% - 10px); /* Занимает половину ширины с учетом отступа */
   flex-direction: column;
   align-items: left;
   justify-content: center;
   cursor: pointer;
   
+}
+
+.empty_slot {
+  height: 30%;
+  width: 100%;
+
 }
 
 .add_slot_button {
@@ -199,18 +236,28 @@ const toggleEnterprise = (index) => {
   border: none;
   color: #000000;
 }
+.enterprise_image_container {
+  height: 100px;
+  width: auto;
+  background: repeat-x center url("../assets/images/background_slot_image.svg");
+  border: 1px solid #1F1F1F;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 .enterprise_name {
   font-size: 1em;
   color: #fff;
   text-align: left;
 }
+
 .enterprise_image {
+  height: 100px;
   width: auto;
-  height: 50px;
+
 }
 .enterprise_capacity {
   font-size: 1em;
-  color: #fff;
+  color: #FF7618;
   text-align: left;
 }
 

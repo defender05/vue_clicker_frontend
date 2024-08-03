@@ -12,6 +12,8 @@
   font-weight: normal;
   font-style: normal;
 } */
+
+/* SF Pro Display*/
 @font-face {
   font-family: 'SFProDisplay';
   src: url('../src/assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
@@ -75,6 +77,45 @@
   font-style: italic;
 }
 
+/* Readex Pro */
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-ExtraLight.ttf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-Light.ttf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-Regular.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-Medium.ttf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-SemiBold.ttf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReadexPro';
+  src: url('../src/assets/fonts/ReadexPro-Bold.ttf') format('opentype');
+  font-weight: 700; 
+  font-style: normal;
+}
+
+
 /* :root {
   font-family: SFProDisplay;
   line-height: 1.5;
@@ -92,7 +133,7 @@
 
 } */
 :root:root {
-  --van-base-font: SFProDisplay;
+  --van-base-font: SFProDisplay, ReadexPro;
 }
 
 

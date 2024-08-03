@@ -2,7 +2,7 @@
     <div class="home_content">
 
         <div class="user_info flex_row">
-            <div class="image_container">
+            <div class="avatar_image_container">
                 <img v-if="user_avatar" :src="user_avatar" class="avatar_image">
                 <van-skeleton v-else title avatar :row="0" />
             </div>
@@ -51,10 +51,10 @@
         <div class="slots_row flex_row">
             <div class="flex_col" style="width: 100%;">
                 <div class="slots_title_row flex_row">
-                <span>Мои предприятия</span><span>{{ user_enterprises.length }} / {{ user_enterprises_slots }}</span>
+                    <span>Мои предприятия</span><span style="color: #2d2d2d">{{ user_enterprises.length }} / {{ user_enterprises_slots }}</span>
                 </div>
                 <van-divider class="divider" style="borderColor: #1F1F1F; margin: 0; padding: 15px 5px"/>
-                <Slots :enterprises="user_enterprises" @update:slotCount="updateSlotCount"/>
+                <Slots :enterprises="user_enterprises" :enterprises_slots="user_enterprises_slots" @update:slotCount="updateSlotCount"/>
             </div>
             
         </div>
@@ -103,7 +103,7 @@ onBeforeMount(async () => {
     user_capacity.value = (store_capacity !== 0) ? store_capacity : user.total_capacity;
     user_enterprises_slots.value = user.enterprises_slots;
     user_enterprises.value = enterprises;
-    console.log('enterprises lenght:', enterprises);
+    console.log('enterprises slots:', user_enterprises_slots.value);
 
     // console.log("UserData", JSON.stringify(user));
     
@@ -149,7 +149,7 @@ const updateSlotCount = (count) => {
     color:rgb(255, 255, 255);
     margin-right: auto;
 }
-.image_container {
+.avatar_image_container {
     width: 50px; /* Устанавливаем нужную ширину контейнера */
     height: 50px; /* Устанавливаем нужную высоту контейнера */
     overflow: visible; /* Скрываем часть изображения, выходящую за пределы контейнера */
@@ -183,8 +183,11 @@ const updateSlotCount = (count) => {
 .user_game_balance {
     font-size: 2.5em;
     font-weight: 500;
-    color: #FF7618;
+    /* color: #FF7618; */
     margin-right: 10px;
+    background: -webkit-linear-gradient(#FF7618, #FF9900);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .balance_text {
     color: #5c5b5b;
