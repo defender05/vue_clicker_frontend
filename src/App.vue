@@ -63,7 +63,6 @@ const showTabbar = computed(() => {
 }
 #content {
   /* z-index: 0; */
-  height: 100%;
   background: radial-gradient(circle, #161515 0%, #000000 100%);
 }
 /* :root:root {

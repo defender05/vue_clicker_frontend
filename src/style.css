@@ -161,6 +161,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.divider {
+  padding: 10px 0px;
+  margin: 0px;
+}
 
 .flex_col {
   display: flex;

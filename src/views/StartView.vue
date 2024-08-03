@@ -27,7 +27,7 @@
 
 <template>
     <div class="start_content">
-        <img src="../assets/coin.svg" alt="" class="rotating_icon">
+        <img src="../assets/images/coin.svg" alt="" class="rotating_icon">
     </div>
 
 </template>

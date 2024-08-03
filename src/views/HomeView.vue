@@ -1,35 +1,3 @@
-<script setup>
-import { ref, onBeforeMount } from 'vue'
-import { useStore } from 'vuex';
-
-const store = useStore();
-const user_name = ref('');
-const user_avatar = ref('');
-const user_balance = ref(0);
-const user_capacity = ref(0);
-
-
-onBeforeMount(async () => {
-    //await store.dispatch('fetchUser', { tg_id: "1347962579" }); // ВРЕМЕННО - УДАЛИТЬ
-    let user = await store.getters.getUserData;
-    console.log('User image_url:', user.country.image_url);
-
-    user_name.value = `${user.first_name} ${user.last_name}`; 
-    user_avatar.value = user.country.image_url;
-
-    let store_balance = store.getters.getBalance;
-    let store_capacity = store.getters.getCapacity;
-
-    user_balance.value = (store_balance !== 0) ? store_balance : user.game_balance;
-    user_capacity.value = (store_capacity !== 0) ? store_capacity : user.total_capacity;
-
-
-    // console.log("UserData", JSON.stringify(user));
-    
-});
-
-</script>
-
 <template>
     <div class="home_content">
 
@@ -39,15 +7,20 @@ onBeforeMount(async () => {
                 <van-skeleton v-else title avatar :row="0" />
             </div>
    
-            <span class="user_name">{{ user_name }}</span>
-            <img src="../assets/user_edit.svg" class="user_edit_image">
+            <div class="name_container flex-col">
+                <div class="user_username">@{{ user_username }}</div>
+                <div v-if="user_full_name" class="user_name">{{ user_full_name }}</div>
+                <div v-else class="user_name">Иван Иванов</div>
+            </div>
+ 
+            <img src="../assets/images/user_edit.svg" class="user_edit_image">
         </div>
 
         <div class="main_info flex_row">
             <div class="flex_col" style="width: 100%;">
                 <div class="balance_row flex_row">
                     <span class="user_game_balance">{{ user_balance.toLocaleString() }}</span>
-                    <img src="../assets/coin.svg" class="balance_coin_image">
+                    <img src="../assets/images/coin.svg" class="balance_coin_image">
                 </div>
 
                 <!-- <div class="flex_row">
@@ -68,18 +41,89 @@ onBeforeMount(async () => {
                         <div class="stat_box_title">Место в рейтинге</div>
                     </div>
                 </div>
+
+                
+
+
             </div>
+        </div>
+
+        <div class="slots_row flex_row">
+            <div class="flex_col" style="width: 100%;">
+                <div class="slots_title_row flex_row">
+                <span>Мои предприятия</span><span>{{ user_enterprises.length }} / {{ user_enterprises_slots }}</span>
+                </div>
+                <van-divider class="divider" style="borderColor: #1F1F1F; margin: 0; padding: 15px 5px"/>
+                <Slots :enterprises="user_enterprises" @update:slotCount="updateSlotCount"/>
+            </div>
+            
         </div>
 
     </div>
 
 </template>
 
+<script setup>
+import { ref, onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
+import Slots from '../components/Slots.vue';
+
+const store = useStore();
+const user_username = ref('');
+const user_full_name = ref('');
+const user_avatar = ref('');
+const user_balance = ref(0);
+const user_capacity = ref(0);
+const user_enterprises_slots = ref(0);
+const user_enterprises = ref([]);
+
+const slotCount = ref(0);
+
+let first_name = '';
+let last_name = '';
+
+
+onBeforeMount(async () => {
+    await store.dispatch('fetchEnterprises', { tg_id: "1347962579" });
+    
+    let user = await store.getters.getUserData;
+    let enterprises = await store.getters.getEnterprisesData;
+
+    first_name = user.first_name ? user.first_name : '';
+    last_name = user.last_name ? user.last_name : '';
+
+    user_username.value = user.username;
+    user_full_name.value = `${first_name} ${last_name}`;
+    user_avatar.value = user.country.image_url;
+
+    let store_balance = store.getters.getBalance;
+    let store_capacity = store.getters.getCapacity;
+
+    user_balance.value = (store_balance !== 0) ? store_balance : user.game_balance;
+    user_capacity.value = (store_capacity !== 0) ? store_capacity : user.total_capacity;
+    user_enterprises_slots.value = user.enterprises_slots;
+    user_enterprises.value = enterprises;
+    console.log('enterprises lenght:', enterprises);
+
+    // console.log("UserData", JSON.stringify(user));
+    
+});
+
+// Обновляем количество слотов
+const updateSlotCount = (count) => {
+    slotCount.value = count; 
+};
+
+</script>
+
+
+
 <style scoped>
 .home_content {
+    height: auto;
     display: flex;
     flex-direction: column;
-    padding: 0% 5%;
+    padding: 10px 30px;
     gap: 20px;
 }
 
@@ -88,6 +132,16 @@ onBeforeMount(async () => {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+.name_container {
+    text-align: start;
+    margin-right: auto;
+}
+.user_username {
+    font-size: 0.8em;
+    font-weight: 400;
+    color:rgb(111, 111, 111);
+   
 }
 .user_name {
     font-size: 1.5em;
@@ -151,7 +205,7 @@ onBeforeMount(async () => {
     background-color: #0C0C0C;
     border: 1.5px solid #1f1f1f7a;
     border-radius: 8px;
-    padding: 10px;
+    padding: 10px 15px;
     text-align: justify;
 }
 .stat_box_title {
@@ -167,5 +221,23 @@ onBeforeMount(async () => {
 .stat_box_unit {
     font-size: 1.5em;
     color: #FF7618;
+}
+
+.slots_row {
+    background-color: #0C0C0C;
+    border: 1px solid #1F1F1F;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 100px;
+}
+
+.slots_title_row {
+    font-size: 1.2em;
+    font-weight: 100;
+    color: #ffffff;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    justify-content: space-between;
 }
 </style>

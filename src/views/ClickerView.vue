@@ -7,7 +7,7 @@
                 <div class="balance_row flex_row">
                     <span v-if="user_balance" class="user_game_balance">{{ user_balance.toLocaleString() }}</span>
                     <span v-else class="user_game_balance">0</span>
-                    <img src="../assets/coin.svg" class="balance_coin_image">
+                    <img src="../assets/images/coin.svg" class="balance_coin_image">
                 </div>
             </div>
         </div>
@@ -29,11 +29,11 @@
 
         <div class="clicker_box_row flex_row">
             <div class="clicker_box flex_row">
-                <img class="clicker_box_icon" src="../assets/energy_icon.svg" alt="">
+                <img class="clicker_box_icon" src="../assets/images/energy_icon.svg" alt="">
                 {{ user_energy }} / 500
             </div>
             <div class="clicker_box flex_row">
-                <img class="clicker_box_icon" src="../assets/boost_icon.svg" alt="">
+                <img class="clicker_box_icon" src="../assets/images/boost_icon.svg" alt="">
                 Бусты
             </div>
         
@@ -156,7 +156,8 @@ const getPlusOneStyle = (position) => ({
 
 <style scoped>
 .clicker_content {
-    height: 100%;
+    position: relative;
+    height: 100vh;
  
     display: flex;
     flex-direction: column;
@@ -225,7 +226,7 @@ const getPlusOneStyle = (position) => ({
 .coinStyle {
   width: 212px;
   height: 212px;
-  background-image: url(../assets/coin.svg);
+  background-image: url(../assets/images/coin.svg);
   border-radius: 50%;
   box-shadow: 0px 0px 16px 0px rgba(138, 143, 254, 0.05);
   transition: transform 0.2s ease;
