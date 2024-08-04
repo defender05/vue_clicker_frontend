@@ -1,7 +1,7 @@
 <template>
     <div class="clicker_content">
 
-        <div class="balance_info flex_row">
+        <div class="balance_info_row flex_row">
             <div class="flex_col" style="width: 100%; gap: 10px">
                 <div class="balance_text">Баланс</div>
                 <div class="balance_row flex_row">
@@ -9,6 +9,21 @@
                     <span v-else class="user_game_balance">0</span>
                     <img src="../assets/images/coin.svg" class="balance_coin_image">
                 </div>
+            </div>
+        </div>
+
+        <div class="params_info_row flex_row">
+            <div class="params_box flex_col">
+                <div class="param_box_title">Производительность</div>
+                <div class="param_box_value">135 т/с</div>
+            </div>
+            <div class="params_box flex_col">
+                <div class="param_box_title">Множитель</div>
+                <div class="param_box_value">x2</div>
+            </div>
+            <div class="params_box flex_col">
+                <div class="param_box_title">Буст</div>
+                <div class="param_box_value">50%</div>
             </div>
         </div>
 
@@ -53,6 +68,7 @@ const store = useStore();
 const user_balance = ref(0);
 const user_capacity = ref(0);
 const user_energy = ref(0);
+const user_country_image = ref('');
 
 
 onBeforeMount(async () => {
@@ -61,10 +77,14 @@ onBeforeMount(async () => {
     let store_balance = store.getters.getBalance;
     let store_capacity = store.getters.getCapacity;
     let store_energy = store.getters.getEnergy;
+    let store_country_image = store.getters.getCountryImageUrl;
+    
 
     user_balance.value = (store_balance !== null) ? store_balance : user.game_balance;
     user_capacity.value = (store_capacity !== null) ? store_capacity : user.total_capacity;
     user_energy.value = (store_energy !== null) ? store_energy : user.energy;
+    user_country_image.value = store_country_image;
+    console.log('store_country_image:', user_country_image.value);
 
     // console.log("UserData", JSON.stringify(user));
     
@@ -86,7 +106,9 @@ const tiltY = ref(0);
 const plusOnePositions = ref([]);
 
 const coinStyle = computed(() => ({
-  transform: `rotateX(${tiltX.value}deg) rotateY(${tiltY.value}deg)`
+    background: `center url(${user_country_image.value}) no-repeat`,
+    backgroundSize: '200%',
+    transform: `rotateX(${tiltX.value}deg) rotateY(${tiltY.value}deg)`
 }));
 
 const handleClick = (event) => {
@@ -167,7 +189,7 @@ const getPlusOneStyle = (position) => ({
     padding-bottom: 120px;
     gap: 20px;
 }
-.balance_info {
+.balance_info_row {
     background-color: #0C0C0C;
     border: 1px solid #1F1F1F;
     border-radius: 20px;
@@ -189,7 +211,7 @@ const getPlusOneStyle = (position) => ({
 }
 .balance_text {
     color: #5c5b5b;
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: 100;
     
 }
@@ -197,12 +219,54 @@ const getPlusOneStyle = (position) => ({
     width: 35px;
     height: 35px;
 }
+
+
+.params_info_row {
+    width: auto;
+    height: auto;
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: auto;
+    gap: 10px;
+}
+.params_box {
+    background-color: #0D0B0B;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: 100;
+    color: #ffffff;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    gap: 2px;
+}
+.param_box_title {
+    font-family: 'Roboto Condensed';
+    font-weight: 400;
+    font-size: 14px;
+    color: #545454;
+}
+.param_box_value {
+    font-family: 'Roboto Condensed';
+    font-weight: 500;
+    font-size: 18px;
+    background: -webkit-linear-gradient(#E0E0E0, #858784);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+
 .click_image_row {
     width: 100%;
     height: auto;
     justify-content: center;
     margin-top: auto;
     margin-bottom: auto;
+    overflow: visible;
     /* margin-bottom: auto; */
     /* perspective: 1000px; */
 }
@@ -229,12 +293,15 @@ const getPlusOneStyle = (position) => ({
 
 
 .coinStyle {
-  width: 212px;
-  height: 212px;
-  background-image: url(../assets/images/coin.svg);
-  border-radius: 50%;
-  box-shadow: 0px 0px 16px 0px rgba(138, 143, 254, 0.05);
-  transition: transform 0.2s ease;
+    width: 400px;
+    height: 400px;
+    /* background: center url('https://s3.timeweb.cloud/27959e0a-country-balls/countries_icons/russia.png') no-repeat; */
+    background-size: 200%;
+    /* box-shadow: 0px 0px 16px 0px rgba(138, 143, 254, 0.05); */
+    transition: transform 0.2s ease;
+    object-fit: contain; 
+    object-position: center;
+    transform-origin: center;
 }
 
 .animated_number {
@@ -246,6 +313,7 @@ const getPlusOneStyle = (position) => ({
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    pointer-events: none;
 
     user-select: none; /* Запретить выделение текста */
     -webkit-user-select: none; /* Safari */

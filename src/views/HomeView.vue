@@ -53,7 +53,7 @@
                 <div class="slots_title_row flex_row">
                     <span>Мои предприятия</span><span style="color: #2d2d2d">{{ user_enterprises.length }} / {{ user_enterprises_slots }}</span>
                 </div>
-                <van-divider class="divider" style="borderColor: #1F1F1F; margin: 0; padding: 15px 5px"/>
+                <!-- <van-divider class="divider" style="borderColor: #1F1F1F; margin: 0; padding: 15px 5px"/> -->
                 <Slots :enterprises="user_enterprises" :enterprises_slots="user_enterprises_slots" @update:slotCount="updateSlotCount"/>
             </div>
             
@@ -84,9 +84,9 @@ let last_name = '';
 
 
 onBeforeMount(async () => {
-    await store.dispatch('fetchEnterprises', { tg_id: "1347962579" });
-    
     let user = await store.getters.getUserData;
+    await store.dispatch('fetchEnterprises', { tg_id: user.tg_id });
+    
     let enterprises = await store.getters.getEnterprisesData;
 
     first_name = user.first_name ? user.first_name : '';
@@ -108,6 +108,10 @@ onBeforeMount(async () => {
     // console.log("UserData", JSON.stringify(user));
     
 });
+
+// watchEffect(() => {
+//     console.log('Данные предприятий обновлены:', newEnterprises);
+// });
 
 // Обновляем количество слотов
 const updateSlotCount = (count) => {
@@ -138,16 +142,24 @@ const updateSlotCount = (count) => {
     margin-right: auto;
 }
 .user_username {
+    max-width: 200px;
     font-size: 0.8em;
     font-weight: 400;
     color:rgb(111, 111, 111);
-   
+    white-space: nowrap; /* Запрет на перенос текста */
+    overflow: hidden; /* Скрыть переполняющийся текст */
+    text-overflow: ellipsis; /* Добавить многоточие в конце */
 }
 .user_name {
+    max-width: 200px;
     font-size: 1.5em;
     font-weight: 400;
     color:rgb(255, 255, 255);
     margin-right: auto;
+    white-space: nowrap; /* Запрет на перенос текста */
+    overflow: hidden; /* Скрыть переполняющийся текст */
+    text-overflow: ellipsis; /* Добавить многоточие в конце */
+    /* border: 1px solid #ccc;  Граница для видимости */
 }
 .avatar_image_container {
     width: 50px; /* Устанавливаем нужную ширину контейнера */
@@ -181,10 +193,11 @@ const updateSlotCount = (count) => {
     /* justify-content: space-between; */
 }
 .user_game_balance {
+    font-family: ReadexPro;
     font-size: 2.5em;
     font-weight: 500;
     /* color: #FF7618; */
-    margin-right: 10px;
+    margin: 0px 10px;
     background: -webkit-linear-gradient(#FF7618, #FF9900);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -239,8 +252,7 @@ const updateSlotCount = (count) => {
     font-weight: 100;
     color: #ffffff;
     text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 0px 5px 20px 5px;
     justify-content: space-between;
 }
 </style>

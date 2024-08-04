@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import Modal from './Modal.vue';
 import slot_default_image from '../assets/images/empty_slot.svg';
 
@@ -173,7 +173,7 @@ const purchaseSlot = () => {
 const toggleEnterprise = (index) => {
   // console.log(index);
   const slot = slots.value[index];
-  if (slot.enterprise) {
+  if (slot.name) {
     showRemoveEnterprisePopup();
   } else {
     showBuyEnterprisePopup();
@@ -202,7 +202,7 @@ const toggleEnterprise = (index) => {
 
 .slot {
   width: calc(50% - 10px);
-  height: calc(190px - 10px);
+  height: calc(190px - 10px);;
   padding: 20px;
   /* border: 1px solid #1F1F1F; */
   border-radius: 10px;
@@ -237,8 +237,9 @@ const toggleEnterprise = (index) => {
   color: #000000;
 }
 .enterprise_image_container {
-  height: 100px;
-  width: auto;
+  max-height: 100px;
+  width: 100%;
+  
   background: repeat-x center url("../assets/images/background_slot_image.svg");
   border: 1px solid #1F1F1F;
   border-radius: 10px;
@@ -251,9 +252,9 @@ const toggleEnterprise = (index) => {
 }
 
 .enterprise_image {
-  height: 100px;
-  width: auto;
-
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 .enterprise_capacity {
   font-size: 1em;

@@ -48,9 +48,12 @@ onBeforeMount(async () => {
     user = await store.getters.getUserData;
     console.log("UserData", JSON.stringify(user));
 
+    let country_image = user.country ? user.country.image_url : '';
+
+    store.commit('setCountryImageUrl', country_image);
     store.commit('setCapacity', user.total_capacity);
     store.commit('setBalance', user.game_balance);
-    store.commit('setEnergy', user.energy)
+    store.commit('setEnergy', user.energy);
 
     if (user.country == null) {
         router.push('/login');

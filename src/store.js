@@ -7,6 +7,7 @@ const store = createStore({
     UserData: Object,
     CountriesData: [],
     EnterprisesData: [],
+    country_image_url: '',
     capacity: 0,
     gdp_balance: 0,
     energy: 0,
@@ -21,6 +22,12 @@ const store = createStore({
     },
     setEnterprisesData(state, data) {
       state.EnterprisesData = data;
+    },
+    setEnterprisesData(state, data) {
+      state.EnterprisesData = data;
+    },
+    setCountryImageUrl(state, data) {
+      state.country_image_url = data;
     },
     setCapacity(state, data) {
       state.capacity = data;
@@ -85,6 +92,7 @@ const store = createStore({
     getUserData: state => state.UserData,
     getCountriesData: state => state.CountriesData,
     getEnterprisesData: state => state.EnterprisesData,
+    getCountryImageUrl: state => state.country_image_url,
     getCapacity: state => state.capacity,
     getBalance: state => state.gdp_balance,
     getEnergy: state => state.energy,
