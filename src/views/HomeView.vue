@@ -32,7 +32,7 @@
                         <div class="flex_row">
                             <span v-if="user_capacity < 10000" class="stat_box_number">{{ user_capacity }}</span>
                             <span v-else class="stat_box_number">{{ user_capacity / 1000 }}k</span>
-                            <span class="stat_box_unit">т/ч</span>
+                            <span class="stat_box_unit">т/с</span>
                         </div>
                         <div class="stat_box_title">Производительность</div>
                     </div>

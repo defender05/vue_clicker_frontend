@@ -23,14 +23,26 @@ const store = createStore({
     setEnterprisesData(state, data) {
       state.EnterprisesData = data;
     },
-    setEnterprisesData(state, data) {
-      state.EnterprisesData = data;
+    removeEntepriseWithSlot(state, data) {
+      // Находим индекс объекта с нужным enterprise_id
+      const index = state.EnterprisesData.findIndex(item => item.enterprise_id === data.enterprise_id);
+
+      // Если объект найден, удаляем его из массива
+      if (index !== -1) {
+        state.EnterprisesData.splice(index, 1);
+        console.log(`Removed enterprise with id ${data.enterprise_id}`);
+      } else {
+        console.log(`Enterprise with id ${data.enterprise_id} not found`);
+      }
     },
     setCountryImageUrl(state, data) {
       state.country_image_url = data;
     },
     setCapacity(state, data) {
       state.capacity = data;
+    },
+    decreaseCapacity(state, value) {
+      state.capacity -= value;
     },
     setBalance(state, data) {
       state.gdp_balance = data;
@@ -97,10 +109,16 @@ const store = createStore({
 
     async fetchRemoveEnterpriseWithSlot({ commit }, payload) {
       try {
-        // enterprises/removeEnterpriseWithSlot?tg_id=${payload.tg_id}&enterprise_id=${payload.enterprise_id}
-        const { data } = await axios.post(`enterprises/removeEnterpriseWithSlot`, {params: payload});
+        const { data } = await axios.post(
+          'enterprises/removeEnterpriseWithSlot',
+           null,
+            { params: payload }
+          );
         console.log(`Removed ent: ${data}`);
-        commit('setBalance', data);
+        commit('removeEntepriseWithSlot', {
+          tg_id: payload.tg_id,
+          enterprise_id: payload.enterprise_id
+        });
       } catch (error) { console.error(error); }
     },
 

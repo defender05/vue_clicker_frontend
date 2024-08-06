@@ -15,7 +15,7 @@
         <div class="params_info_row flex_row">
             <div class="params_box flex_col">
                 <div class="param_box_title">Производительность</div>
-                <div class="param_box_value">135 т/с</div>
+                <div class="param_box_value">{{ user_capacity }} т/с</div>
             </div>
             <div class="params_box flex_col">
                 <div class="param_box_title">Множитель</div>

@@ -28,7 +28,7 @@
     >
       <template #default>
         <div class="popup_container flex-col">
-          <img class="slot_popup_image" src="../assets/images/empty_slot_image.svg" alt="">
+          <div v-if="selected_slot.image" class="enterprise_popup_image_container"></div>
           <div class="slot_popup_title">
             <span style="margin-right: 10px;">Слот пуст</span>
             <span style="font-size: 0.7em; color: #FF7618">0 т/с</span>
@@ -61,7 +61,7 @@
           <div v-if="selected_slot.description" class="slot_popup_desc">{{ selected_slot.description }}</div>
           <div v-else class="slot_popup_desc">Тут должно быть описание предприятия, но его нет :(</div>
 
-          <button class="bordered_button" @click="removeEnterpriseWithSlot">Удалить предприятие</button>
+          <button class="bordered_button" @click="removeEnterpriseWithSlot(selected_slot.tg_id, selected_slot.id, selected_slot.capacity)">Удалить предприятие</button>
         </div>
       </template>
     </van-popup>
@@ -84,8 +84,13 @@
 
 <script setup>
 import { ref, watchEffect } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import Modal from './Modal.vue';
 // import slot_default_image from '../assets/images/empty_slot.svg';
+
+const store = useStore();
+const router = useRouter();
 
 const props = defineProps({
   slotCount: {
@@ -116,15 +121,12 @@ const isModalVisible = ref(false)
 // watch(() => props.enterprises, (newEnterprises) => {
 //   console.log('Данные предприятий обновлены:', newEnterprises);
 // });
-watchEffect(() => {
-  let ents = props.enterprises;
-  let slots_count = props.enterprises_slots;
-
-  console.log('Кол-во слотов:', slots_count);
-  console.log('Данные предприятий обновлены:', ents);
-
+const InitEnterprisesSlots = (ents, slots_count) => {
+  slots.value = [];
   for (let item of ents) {
     slots.value.push({
+      tg_id: item.tg_id,
+      id: item.enterprise_id,
       image: item.image_url,
       name: item.name,
       capacity: item.capacity,
@@ -139,6 +141,8 @@ watchEffect(() => {
     let empty_slot_count = slots_count - ents.length;
     for (let i = 0; i < empty_slot_count; i++) { 
       slots.value.push({
+        tg_id: null,
+        id: null,
         image: null,
         name: null,
         capacity: null,
@@ -148,7 +152,19 @@ watchEffect(() => {
       })
     }
   }
+};
+
+watchEffect(() => {
+  let ents = props.enterprises;
+  let slots_count = props.enterprises_slots;
+
+  console.log('Кол-во слотов:', slots_count);
+  console.log('Данные предприятий обновлены:', ents);
+
+  InitEnterprisesSlots(ents, slots_count);
 });
+
+
 
 // onBeforeMount(async () => {
   
@@ -164,17 +180,30 @@ watchEffect(() => {
 
 // Добавление предприятия в слот
 const addEnterpriseToSlot = () => {
-  
+  router.push('/shop');
 };
 // Удаление предприятия из слота
-const removeEnterpriseWithSlot = () => {
+const removeEnterpriseWithSlot = async (tg_id, enterprise_id, capacity) => {
+  console.log('Удаление предприятия из слота:', tg_id, ' - ', enterprise_id);
+  /* Для краткости можно воспользоваться синтаксисом ES6,
+    который позволяет использовать сокращенную запись для свойств объекта,
+    если имя свойства и имя переменной совпадают: 
+    Эта запись эквивалентна { tg_id: tg_id, enterprise_id: enterprise_id }.*/
+  await store.dispatch('fetchRemoveEnterpriseWithSlot', {tg_id, enterprise_id});
   
+  // let ents = store.getters.getEnterprisesData;
+  // let user = store.getters.getUserData;
+
+  store.commit('decreaseCapacity', capacity);
+  removeEnterprisePopupState.value = false;
 };
 
 
+// Показать попап добавления предприятия в слот
 const showBuyEnterprisePopup = () => {
   buyEnterprisePopupState.value = true;
 };
+// Показать попап удаления предприятия из слота
 const showRemoveEnterprisePopup = () => {
   removeEnterprisePopupState.value = true;
 };
@@ -186,7 +215,9 @@ const showPurchaseModal = () => {
 
 const purchaseSlot = () => {
   if (slots.value.length < 15) {
-    slots.value.push({ 
+    slots.value.push({
+      tg_id: null,
+      id: null, 
       image: null,
       name: null,
       capacity: null,
@@ -257,6 +288,7 @@ const toggleEnterprise = (index) => {
   width: 100%;
   background-color: #191919;
   border: none;
+  border-radius: 8px;
   color: #fff;
   padding: 15px 0px;
   margin-top: 20px;

@@ -39,42 +39,44 @@
         <div class="menu_item_text">Рейтинг</div>
       </div>
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import { useRouter } from 'vue-router';
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const navigate = (path) => {
+  router.push(path);
+};
+
+const isActive = (path) => {
+  return router.currentRoute.value.path === path;
+};
+</script>
   
-  const router = useRouter();
-  
-  const navigate = (path) => {
-    router.push(path);
-  };
-  
-  const isActive = (path) => {
-    return router.currentRoute.value.path === path;
-  };
-  </script>
-  
-  <style scoped>
-  .tabbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-around;
-    background-color: #0C0C0C;
-    border: 1px solid #1F1F1F;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tab {
-    padding: 16px;
-    cursor: pointer;
-    color: #868686;
-  }
-  
-  .tab.active {
-    color: #FF7618;
-  }
-  </style>
+
+<style scoped>
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #0C0C0C;
+  border: 1px solid #1F1F1F;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab {
+  padding: 16px;
+  cursor: pointer;
+  color: #868686;
+}
+
+.tab.active {
+  color: #FF7618;
+}
+</style>
