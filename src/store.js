@@ -62,6 +62,14 @@ const store = createStore({
       } catch (error) { console.error(error); }
     },
 
+    async fetchUpdateGameBalance({ commit }, payload) {
+      try {
+        const { data } = await axios.patch(`user/updateGameBalance?tg_id=${payload.tg_id}&current_tap_count=${payload.current_tap_count}`);
+        // console.log(`Updated balance: ${data.balance}`);
+        commit('setBalance', data.balance);
+      } catch (error) { console.error(error); }
+    },
+
     async fetchCountries({ commit }, payload) {
       try {
         const { data } = await axios.get('countries/list', {params: payload});
@@ -78,11 +86,21 @@ const store = createStore({
       } catch (error) { console.error(error); }
     },
 
-    async fetchUpdateGameBalance({ commit }, payload) {
+    async fetchAddEnterpriseToSlot({ commit }, payload) {
       try {
-        const { data } = await axios.patch(`user/updateGameBalance?tg_id=${payload.tg_id}&current_tap_count=${payload.current_tap_count}`);
-        console.log(`Updated balance: ${data.balance}`);
-        commit('setBalance', data.balance);
+        // enterprises/removeEnterpriseWithSlot?tg_id=${payload.tg_id}&enterprise_id=${payload.enterprise_id}
+        const { data } = await axios.post(`enterprises/buy`, {params: payload});
+        console.log(`Buing ent: ${data}`);
+        commit('setBalance', data); // TODO: добавить сеттер
+      } catch (error) { console.error(error); }
+    },
+
+    async fetchRemoveEnterpriseWithSlot({ commit }, payload) {
+      try {
+        // enterprises/removeEnterpriseWithSlot?tg_id=${payload.tg_id}&enterprise_id=${payload.enterprise_id}
+        const { data } = await axios.post(`enterprises/removeEnterpriseWithSlot`, {params: payload});
+        console.log(`Removed ent: ${data}`);
+        commit('setBalance', data);
       } catch (error) { console.error(error); }
     },
 

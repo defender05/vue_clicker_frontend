@@ -162,7 +162,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -172,14 +172,14 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
+} */
+/* button:hover {
   border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 .card {
   padding: 2em;
@@ -192,7 +192,7 @@ button:focus-visible {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -203,9 +203,9 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 .divider {
-  padding: 10px 0px;
+  padding: 5px 0px;
   margin: 0px;
 }
 
@@ -245,4 +245,28 @@ button:focus-visible {
 .van-icon__image {
   height: 5em!important;
   width: 5em!important;
+}
+
+
+.filled_button {
+  width: 100%;
+  color: #000000;
+  font-size: 1.3em;
+  padding: 20px 10px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.bordered_button {
+  width: 100%;
+  color: #ffffff;
+  background-color: transparent;
+  font-size: 1.3em;
+  padding: 20px 10px;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
 }

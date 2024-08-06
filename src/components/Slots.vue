@@ -29,11 +29,15 @@
       <template #default>
         <div class="popup_container flex-col">
           <img class="slot_popup_image" src="../assets/images/empty_slot_image.svg" alt="">
-          <div class="slot_popup_title">Слот пуст</div>
+          <div class="slot_popup_title">
+            <span style="margin-right: 10px;">Слот пуст</span>
+            <span style="font-size: 0.7em; color: #FF7618">0 т/с</span>
+          </div>
           <van-divider class="divider" />
           <div class="slot_popup_desc">Данный слот не занят никаким предприятием.
           Добавьте предприятие, чтобы начать зарабатывать быстрее.</div>
-          <div class="slot_popup_button">Добавить предприятие</div>
+
+          <button class="filled_button" @click="addEnterpriseToSlot">Добавить предприятие</button>
         </div>
       </template>
     </van-popup>
@@ -46,11 +50,18 @@
     >
       <template #default>
         <div class="popup_container flex-col">
-          <img class="slot_popup_image" src="../assets/images/empty_slot_image.svg" alt="">
-          <div class="slot_popup_title">Слот занят</div>
+          <div v-if="selected_slot.image" class="enterprise_popup_image_container">
+            <img v-if="selected_slot.image" :src="selected_slot.image" class="enterprise__popup_image" />
+          </div>
+          <div class="slot_popup_title">
+            <span style="margin-right: 10px;">{{ selected_slot.name }}</span>
+            <span style="font-size: 0.7em; color: #FF7618">{{ selected_slot.capacity }} т/с</span>
+          </div>
           <van-divider class="divider" />
-          <div class="slot_popup_desc">Данный слот занят.</div>
-          <div class="slot_popup_button">Удалить предприятие</div>
+          <div v-if="selected_slot.description" class="slot_popup_desc">{{ selected_slot.description }}</div>
+          <div v-else class="slot_popup_desc">Тут должно быть описание предприятия, но его нет :(</div>
+
+          <button class="bordered_button" @click="removeEnterpriseWithSlot">Удалить предприятие</button>
         </div>
       </template>
     </van-popup>
@@ -74,7 +85,7 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import Modal from './Modal.vue';
-import slot_default_image from '../assets/images/empty_slot.svg';
+// import slot_default_image from '../assets/images/empty_slot.svg';
 
 const props = defineProps({
   slotCount: {
@@ -97,6 +108,7 @@ const emit = defineEmits(['update:slotCount']);
 //       capacity: null,
 //   })));
 const slots = ref([]);
+const selected_slot = ref({});
 const buyEnterprisePopupState = ref(false);
 const removeEnterprisePopupState = ref(false);
 const isModalVisible = ref(false)
@@ -116,6 +128,9 @@ watchEffect(() => {
       image: item.image_url,
       name: item.name,
       capacity: item.capacity,
+      description: item.description,
+      game_price: item.game_price,
+      stars_price: item.stars_price,
     })
   }
 
@@ -127,6 +142,9 @@ watchEffect(() => {
         image: null,
         name: null,
         capacity: null,
+        description: null,
+        game_price: null,
+        stars_price: null,
       })
     }
   }
@@ -144,6 +162,14 @@ watchEffect(() => {
 //   }
 // });
 
+// Добавление предприятия в слот
+const addEnterpriseToSlot = () => {
+  
+};
+// Удаление предприятия из слота
+const removeEnterpriseWithSlot = () => {
+  
+};
 
 
 const showBuyEnterprisePopup = () => {
@@ -163,7 +189,10 @@ const purchaseSlot = () => {
     slots.value.push({ 
       image: null,
       name: null,
-      capacity: null, 
+      capacity: null,
+      description: null,
+      game_price: null,
+      stars_price: null,
     })
     emit('update:slotCount', slots.value.length);
   }
@@ -174,6 +203,7 @@ const toggleEnterprise = (index) => {
   // console.log(index);
   const slot = slots.value[index];
   if (slot.name) {
+    selected_slot.value = slot;
     showRemoveEnterprisePopup();
   } else {
     showBuyEnterprisePopup();
@@ -244,6 +274,7 @@ const toggleEnterprise = (index) => {
   border: 1px solid #1F1F1F;
   border-radius: 10px;
   margin-bottom: 10px;
+  align-content: center;
 }
 .enterprise_name {
   font-size: 1em;
@@ -252,10 +283,12 @@ const toggleEnterprise = (index) => {
 }
 
 .enterprise_image {
-  height: 100%;
-  width: 100%;
+  height: 60%;
+  width: 60%;
   object-fit: contain;
+
 }
+
 .enterprise_capacity {
   font-size: 1em;
   color: #FF7618;
@@ -270,6 +303,22 @@ const toggleEnterprise = (index) => {
   padding: 20px;
   
 }
+.enterprise_popup_image_container {
+  height: 130px;
+  width: 100%;
+  
+  background: repeat-x center url("../assets/images/background_slot_image.svg");
+  border: 1px solid #1F1F1F;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  align-content: center;
+}
+.enterprise__popup_image {
+  height: 60%;
+  width: 60%;
+  object-fit: contain;
+
+}
 .slot_popup_title {
   color: #fff;
   font-size: 1.5em;
@@ -283,14 +332,6 @@ const toggleEnterprise = (index) => {
   padding: 0px;
   text-align: left;
 }
-.slot_popup_button {
-  color: #000000;
-  font-size: 1.3em;
-  padding: 20px 10px;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 20px;
-}
+
+
 </style>
