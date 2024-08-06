@@ -83,10 +83,8 @@ button.active {
 }
 
 .tab-content {
-  border: 1px solid #ddd;
-  padding: 20px;
+  padding: 0px;
   width: 100%;
-  max-width: 500px;
   text-align: left;
 }
 </style>

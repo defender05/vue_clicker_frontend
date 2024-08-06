@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import Tabs from '../components/Tabs.vue';
-import EnterprisesShop from '../components/EnterprisesShop.vue'
-import BoostShop from '../components/BoostShop.vue'
-import SlotsShop from '../components/SlotsShop.vue'
-import CasesShop from '../components/CasesShop.vue'
+import Tabs from '../components/abstract/Tabs.vue';
+import EnterprisesShop from '../components/shop/EnterprisesShop.vue'
+import BoostShop from '../components/shop/BoostShop.vue'
+import SlotsShop from '../components/shop/SlotsShop.vue'
+import CasesShop from '../components/shop/CasesShop.vue'
 
 import enterpriseIcon from '../assets/images/shop/shop_enterprises_icon.svg'
 import boostIcon from '../assets/images/shop/shop_boosts_icon.svg'
@@ -29,7 +29,6 @@ const tabsData = [
     <div class="shop_content">
         <Tabs :tabs="tabsData" />
     </div>
-
 </template>
 
 <style scoped>

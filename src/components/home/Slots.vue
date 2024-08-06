@@ -10,7 +10,7 @@
       <div v-if="slot.image" class="enterprise_image_container">
         <img v-if="slot.image" :src="slot.image" class="enterprise_image" />
       </div>
-      <img v-else class="empty_slot" src="../assets/images/empty_slot.svg"/>
+      <img v-else class="empty_slot" src="/src/assets/images/empty_slot.svg"/>
 
 
         <div v-if="slot.name" class="enterprise_name">{{ slot.name }}</div>
@@ -86,7 +86,7 @@
 import { ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import Modal from './Modal.vue';
+import Modal from '../abstract/Modal.vue';
 // import slot_default_image from '../assets/images/empty_slot.svg';
 
 const store = useStore();

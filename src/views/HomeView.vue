@@ -66,7 +66,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
-import Slots from '../components/Slots.vue';
+import Slots from '../components/home/Slots.vue';
 
 const store = useStore();
 const user_username = ref('');
