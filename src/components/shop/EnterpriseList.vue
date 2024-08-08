@@ -1,19 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useStore } from 'vuex';
 import ProductList from '../abstract/ProductList.vue';
 
 const store = useStore();
 
-defineProps({
-  msg: String,
-})
+const product_list = ref([]);
+
+watchEffect(() => {
+
+});
 
 </script>
 
 
 <template>
-  <ProductList :products="products">
+  <ProductList v-if="product_list" :products="product_list">
     <template #body>
       <div v-if="item.image" class="product_image_container">
         <img v-if="item.image" :src="item.image" class="product_image" />

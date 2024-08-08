@@ -7,6 +7,18 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => [],
+  },
+  tabButtonsStyle: {
+    type: Object,
+    default: () => ({})
+  },
+  buttonStyle: {
+    type: Object,
+    default: () => ({})
+  },
+  activeButtonStyle: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -24,14 +36,15 @@ const getCurrentTabComponent = () => {
 </script>
 
 <template>
-  <div class="tabs-container">
-    <div class="tabs-buttons">
+  <div class="tabs_container">
+    <div class="tabs_buttons" :style="props.tabButtonsStyle">
       
       <button
         v-for="tab in props.tabs"
         :key="tab.name"
         @click="setActiveTab(tab.name)"
         :class="{ active: activeTab === tab.name }"
+        :style="activeTab === tab.name ? props.activeButtonStyle : props.buttonStyle"
       >
         <img v-if="activeTab === tab.name" :src="tab.icon_active" style="margin-bottom: 5px; fill: blue">
         <img v-else :src="tab.icon" style="margin-bottom: 5px; fill: blue">
@@ -39,6 +52,7 @@ const getCurrentTabComponent = () => {
         {{ tab.label }}
       </button>
     </div>
+    <van-divider class="shop_divider" />
     <div class="tab-content">
       <component :is="getCurrentTabComponent()" />
     </div>
@@ -47,19 +61,18 @@ const getCurrentTabComponent = () => {
 
 
 <style scoped>
-.tabs-container {
+.tabs_container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.tabs-buttons {
+.tabs_buttons {
   width: 100%;
   height: 200px;
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(2, 50%);
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 button {
@@ -73,7 +86,7 @@ button {
   color: #6F6F6F;
   background-color: #101010;
   border: 2px solid #191919;
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 button.active {
@@ -86,6 +99,13 @@ button.active {
   padding: 0px;
   width: 100%;
   text-align: left;
+}
+.shop_divider {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 1px;
+  background-color: #191919;
 }
 </style>
 

@@ -19,10 +19,31 @@ const tabsData = [
   { name: 'middle', label: 'Средний бизнес', component: BoostList, icon: middleDefault, icon_active: middleActive },
   { name: 'big', label: 'Крупный бизнес', component: SlotsList, icon: bigDefault, icon_active: bigActive },
 ]
+const tabButtonsStyle = {
+  width: 'auto',
+  height: '100px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: '10px'
+}
+const buttonStyle = {
+  color: '#A1A1A1',
+  backgroundColor: 'rgba(255, 118, 24, 0.0)',
+}
+const activeButtonStyle = {
+  backgroundColor: 'rgba(255, 118, 24, 0.0)',
+  border: '2px solid rgba(255, 255, 255, 1)',
+  color: '#fff'
+}
 </script>
 
 <template>
-<Tabs :tabs="tabsData" />
+<Tabs 
+  :tabs="tabsData" 
+  :tabButtonsStyle="tabButtonsStyle" 
+  :buttonStyle="buttonStyle" 
+  :activeButtonStyle="activeButtonStyle"
+/>
 </template>
 
 <style scoped>

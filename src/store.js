@@ -6,6 +6,7 @@ const store = createStore({
   state: {
     UserData: Object,
     CountriesData: [],
+    UserEnterprisesData: [],
     EnterprisesData: [],
     country_image_url: '',
     capacity: 0,
@@ -20,16 +21,19 @@ const store = createStore({
     setCountriesData(state, data) {
       state.CountriesData = data;
     },
+    setUserEnterprisesData(state, data) {
+      state.UserEnterprisesData = data;
+    },
     setEnterprisesData(state, data) {
       state.EnterprisesData = data;
     },
     removeEntepriseWithSlot(state, data) {
       // Находим индекс объекта с нужным enterprise_id
-      const index = state.EnterprisesData.findIndex(item => item.enterprise_id === data.enterprise_id);
+      const index = state.UserEnterprisesData.findIndex(item => item.enterprise_id === data.enterprise_id);
 
       // Если объект найден, удаляем его из массива
       if (index !== -1) {
-        state.EnterprisesData.splice(index, 1);
+        state.UserEnterprisesData.splice(index, 1);
         console.log(`Removed enterprise with id ${data.enterprise_id}`);
       } else {
         console.log(`Enterprise with id ${data.enterprise_id} not found`);
@@ -92,9 +96,17 @@ const store = createStore({
 
     async fetchEnterprises({ commit }, payload) {
       try {
-        const { data } = await axios.get(`enterprises/listByUser/${payload.tg_id}`);
+        const { data } = await axios.get('enterprises/listByType', {params: payload});
         // console.log(data);
         commit('setEnterprisesData', Array.from(data));
+      } catch (error) { console.error(error); }
+    },
+
+    async fetchUserEnterprises({ commit }, payload) {
+      try {
+        const { data } = await axios.get(`enterprises/listByUser/${payload.tg_id}`);
+        // console.log(data);
+        commit('setUserEnterprisesData', Array.from(data));
       } catch (error) { console.error(error); }
     },
 
@@ -127,7 +139,7 @@ const store = createStore({
   getters: {
     getUserData: state => state.UserData,
     getCountriesData: state => state.CountriesData,
-    getEnterprisesData: state => state.EnterprisesData,
+    getUserEnterprisesData: state => state.UserEnterprisesData,
     getCountryImageUrl: state => state.country_image_url,
     getCapacity: state => state.capacity,
     getBalance: state => state.gdp_balance,

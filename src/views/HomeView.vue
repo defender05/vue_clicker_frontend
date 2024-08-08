@@ -85,9 +85,9 @@ let last_name = '';
 
 onBeforeMount(async () => {
     let user = await store.getters.getUserData;
-    await store.dispatch('fetchEnterprises', { tg_id: user.tg_id });
+    await store.dispatch('fetchUserEnterprises', { tg_id: user.tg_id });
     
-    let enterprises = await store.getters.getEnterprisesData;
+    let enterprises = await store.getters.getUserEnterprisesData;
 
     first_name = user.first_name ? user.first_name : '';
     last_name = user.last_name ? user.last_name : '';

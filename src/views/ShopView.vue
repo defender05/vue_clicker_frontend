@@ -16,6 +16,12 @@ import boostActive from '../assets/images/shop/shop_boosts_icon_active.svg'
 import slotsActive from '../assets/images/shop/shop_slots_icon_active.svg'
 import casesActive from '../assets/images/shop/shop_cases_icon_active.svg'
 
+onBeforeMount(async () => {
+    await store.dispatch('fetchEnterprises', { type_id: "1" });
+    user = await store.getters.getEnterprisesData;
+    console.log("UserData", JSON.stringify(user));
+});
+
 const tabsData = [
   { name: 'tab1', label: 'Предприятия', component: EnterprisesShop, icon: enterpriseIcon, icon_active: enterpriseActive },
   { name: 'tab2', label: 'Бусты', component: BoostShop, icon: boostIcon, icon_active: boostActive },
