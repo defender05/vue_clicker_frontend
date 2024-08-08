@@ -302,7 +302,7 @@ const toggleEnterprise = (index) => {
   max-height: 100px;
   width: 100%;
   
-  background: repeat-x center url("../assets/images/background_slot_image.svg");
+  background: repeat-x center url("/src/assets/images/background_slot_image.svg");
   border: 1px solid #1F1F1F;
   border-radius: 10px;
   margin-bottom: 10px;

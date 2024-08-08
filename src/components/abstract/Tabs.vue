@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineProps } from 'vue'
 
+
 // Определение пропсов для компонента
 const props = defineProps({
   tabs: {
@@ -54,7 +55,7 @@ const getCurrentTabComponent = () => {
     </div>
     <van-divider class="shop_divider" />
     <div class="tab-content">
-      <component :is="getCurrentTabComponent()" />
+      <component :is="getCurrentTabComponent()" :input_data="activeTab"/>
     </div>
   </div>
 </template>
@@ -86,7 +87,7 @@ button {
   color: #6F6F6F;
   background-color: #101010;
   border: 2px solid #191919;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 
 button.active {

@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
 import Tabs from '../components/abstract/Tabs.vue';
 import EnterprisesShop from '../components/shop/EnterprisesShop.vue'
 import BoostShop from '../components/shop/BoostShop.vue'
@@ -16,10 +17,12 @@ import boostActive from '../assets/images/shop/shop_boosts_icon_active.svg'
 import slotsActive from '../assets/images/shop/shop_slots_icon_active.svg'
 import casesActive from '../assets/images/shop/shop_cases_icon_active.svg'
 
+// import EnterpriseList from '../components/shop/EnterpriseList.vue'
+
+const store = useStore();
+
 onBeforeMount(async () => {
-    await store.dispatch('fetchEnterprises', { type_id: "1" });
-    user = await store.getters.getEnterprisesData;
-    console.log("UserData", JSON.stringify(user));
+    await store.dispatch('fetchEnterprises', { type_id: null });
 });
 
 const tabsData = [
@@ -39,6 +42,7 @@ const tabsData = [
 
 <style scoped>
 .shop_content {
+    background-color: black;
     padding: 10px 30px;
 }
 </style>

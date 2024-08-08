@@ -140,6 +140,7 @@ const store = createStore({
     getUserData: state => state.UserData,
     getCountriesData: state => state.CountriesData,
     getUserEnterprisesData: state => state.UserEnterprisesData,
+    getEnterprisesData: state => state.EnterprisesData,
     getCountryImageUrl: state => state.country_image_url,
     getCapacity: state => state.capacity,
     getBalance: state => state.gdp_balance,
