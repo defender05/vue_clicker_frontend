@@ -72,7 +72,7 @@ const store = createStore({
 
     async fetchUser({ commit }, payload) {
       try {
-        const { data } = await axios.get(`user/get/tg/${payload.tg_id}`);
+        const { data } = await axios.post('me', null, {params: payload});
         console.log(data);
         commit('setUserData', data);
       } catch (error) { console.error(error); }

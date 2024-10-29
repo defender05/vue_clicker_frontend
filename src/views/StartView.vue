@@ -29,7 +29,7 @@ onBeforeMount(async () => {
     store.commit('setEnergy', user.energy);
 
     if (user.country == null) {
-        router.push('/login');
+        router.push('/home');
     } else {
         router.push('/home');
     }
