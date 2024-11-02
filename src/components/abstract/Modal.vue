@@ -26,8 +26,8 @@ const props = defineProps({
 })
 
 const close = () => {
-// Эмитируем событие закрытия модального окна
-emit('close')
+    // Эмитируем событие закрытия модального окна
+    emit('close')
 }
 </script>
   

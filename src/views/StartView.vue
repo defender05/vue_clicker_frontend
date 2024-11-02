@@ -16,8 +16,14 @@ const store = useStore();
 
 let user = null;
 
+// const tg = Telegram;
+// console.log('InitDataUnsafe' + JSON.stringify(tg.WebApp.initData));
+
+
 onBeforeMount(async () => {
-    await store.dispatch('fetchUser', { tg_id: "1001521242" });
+    // await store.dispatch('fetchToken', initData);
+
+    await store.dispatch('fetchUser', {tg_id: 1001521242});
     user = await store.getters.getUserData;
     console.log("UserData", JSON.stringify(user));
 

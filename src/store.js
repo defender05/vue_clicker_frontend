@@ -4,6 +4,7 @@ import axios from "axios";
 const store = createStore({
 
   state: {
+    Token: String,
     UserData: Object,
     CountriesData: [],
     UserEnterprisesData: [],
@@ -15,6 +16,9 @@ const store = createStore({
   },
 
   mutations: {
+    setToken(state, data) {
+      state.UserData = data;
+    },
     setUserData(state, data) {
       state.UserData = data;
     },
@@ -69,11 +73,21 @@ const store = createStore({
   },
 
   actions: {
+    async fetchToken({ commit }, payload) {
+      try {
+        const { data } = await axios.post(`webapp/auth`, null, {params: payload});
+        console.log('Token: ' + data);
+        commit('setToken', data);
+      } catch (error) { console.error(error); }
+    },
 
     async fetchUser({ commit }, payload) {
       try {
-        const { data } = await axios.get(`user/get/tg/${payload.tg_id}`);
-        console.log(data);
+        // const { data } = await axios.post(`user/me`, null, {params: payload});
+        // console.log(data);
+        data = {
+          
+        }
         commit('setUserData', data);
       } catch (error) { console.error(error); }
     },
@@ -113,7 +127,7 @@ const store = createStore({
     async fetchAddEnterpriseToSlot({ commit }, payload) {
       try {
         // enterprises/removeEnterpriseWithSlot?tg_id=${payload.tg_id}&enterprise_id=${payload.enterprise_id}
-        const { data } = await axios.post(`enterprises/buy`, {params: payload});
+        const { data } = await axios.post(`enterprises/buy`, null, {params: payload});
         console.log(`Buing ent: ${data}`);
         commit('setBalance', data); // TODO: добавить сеттер
       } catch (error) { console.error(error); }
