@@ -53,7 +53,6 @@
                 <div class="slots_title_row flex_row">
                     <span>Мои предприятия</span><span style="color: #2d2d2d">{{ user_enterprises.length }} / {{ user_enterprises_slots }}</span>
                 </div>
-                <!-- <van-divider class="divider" style="borderColor: #1F1F1F; margin: 0; padding: 15px 5px"/> -->
                 <Slots :enterprises="user_enterprises" :enterprises_slots="user_enterprises_slots" @update:slotCount="updateSlotCount"/>
             </div>
             
@@ -84,10 +83,63 @@ let last_name = '';
 
 
 onBeforeMount(async () => {
-    let user = await store.getters.getUserData;
-    await store.dispatch('fetchUserEnterprises', { tg_id: user.tg_id });
+    // let user = await store.getters.getUserData;
+    let user = {
+          id: '001',
+          tg_id: '1111111',
+          username: 'velozadrot',
+          first_name: 'Chelovek',
+          last_name: 'Pawuk',
+          game_balance: 1000000,
+          total_capacity: 10000,
+          enterprises_slots: 10,
+          country: {
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/countries_icons/russia.svg'
+          }
+    }
+    // await store.dispatch('fetchUserEnterprises', { tg_id: user.tg_id });
+    console.log("UserData", JSON.stringify(user));
     
-    let enterprises = await store.getters.getUserEnterprisesData;
+    // let enterprises = await store.getters.getUserEnterprisesData;
+    let enterprises = [
+        {
+            id: 1,
+            name: 'Гастроном',
+            description: 'Описание...',
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/enterprises_icons/Гастроном.png', 
+            capacity: 150,
+            game_price: 100,
+            stars_price: 10,
+        },
+        {
+            id: 1,
+            name: 'Гипермаркет',
+            description: 'Описание...',
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/enterprises_icons/Гипермаркет.png', 
+            capacity: 350,
+            game_price: 1000,
+            stars_price: 50,
+        },
+        {
+            id: 1,
+            name: 'Ресторан',
+            description: 'Описание...',
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/enterprises_icons/Ресторан.png', 
+            capacity: 550,
+            game_price: 1500,
+            stars_price: 100,
+        },
+        {
+            id: 1,
+            name: 'Разработка ПО',
+            description: 'Описание...',
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/enterprises_icons/Разработка ПО.png', 
+            capacity: 2000,
+            game_price: 2500,
+            stars_price: 150,
+        }
+
+    ]
 
     first_name = user.first_name ? user.first_name : '';
     last_name = user.last_name ? user.last_name : '';
@@ -105,7 +157,7 @@ onBeforeMount(async () => {
     user_enterprises.value = enterprises;
     console.log('enterprises slots:', user_enterprises_slots.value);
 
-    // console.log("UserData", JSON.stringify(user));
+    
     
 });
 
@@ -168,12 +220,12 @@ const updateSlotCount = (count) => {
     margin: 0px 15px;
 }
 .avatar_image {
-    width: 100px;
+    width: 55px;
     height: auto; 
     object-fit: contain; /* Сохраняем пропорции изображения */
     object-position: center; /* Центрируем изображение в контейнере */
     transform-origin: center;
-    transform: translate(-25px, -22px);
+    /* transform: translate(-25px, -22px); */
 }
 .user_edit_image {
     width: 35px;

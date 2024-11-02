@@ -72,12 +72,31 @@ const user_country_image = ref('');
 
 
 onBeforeMount(async () => {
-    let user = await store.getters.getUserData;
+    // let user = await store.getters.getUserData;
+    let user = {
+          id: '001',
+          tg_id: '1111111',
+          username: 'velozadrot',
+          first_name: 'Chelovek',
+          last_name: 'Pawuk',
+          game_balance: 1000000,
+          total_capacity: 10000,
+          enterprises_slots: 10,
+          country: {
+            image_url: 'https://s3.timeweb.cloud/a483be37-countryballs/countries_icons/russia.svg'
+          },
+          energy: 500
+    }
     // console.log('User image_url:', user.country.image_url);
-    let store_balance = store.getters.getBalance;
-    let store_capacity = store.getters.getCapacity;
-    let store_energy = store.getters.getEnergy;
-    let store_country_image = store.getters.getCountryImageUrl;
+    // let store_balance = store.getters.getBalance;
+    // let store_capacity = store.getters.getCapacity;
+    // let store_energy = store.getters.getEnergy;
+    // let store_country_image = store.getters.getCountryImageUrl;
+
+    let store_balance = user.game_balance;
+    let store_capacity = user.total_capacity;
+    let store_energy = user.energy;
+    let store_country_image = user.country.image_url;
     
 
     user_balance.value = (store_balance !== null) ? store_balance : user.game_balance;
@@ -107,7 +126,7 @@ const plusOnePositions = ref([]);
 
 const coinStyle = computed(() => ({
     background: `center url(${user_country_image.value}) no-repeat`,
-    backgroundSize: '200%',
+    backgroundSize: '100%',
     transform: `rotateX(${tiltX.value}deg) rotateY(${tiltY.value}deg)`
 }));
 

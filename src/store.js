@@ -73,22 +73,23 @@ const store = createStore({
   },
 
   actions: {
-    async fetchToken({ commit }, payload) {
-      try {
-        const { data } = await axios.post(`webapp/auth`, null, {params: payload});
-        console.log('Token: ' + data);
-        commit('setToken', data);
-      } catch (error) { console.error(error); }
-    },
+    // async fetchToken({ commit }, payload) {
+    //   try {
+    //     const { data } = await axios.post(`webapp/auth`, null, {params: payload});
+    //     console.log('Token: ' + data);
+    //     commit('setToken', data);
+    //   } catch (error) { console.error(error); }
+    // },
 
     async fetchUser({ commit }, payload) {
       try {
         // const { data } = await axios.post(`user/me`, null, {params: payload});
         // console.log(data);
-        data = {
-          
-        }
-        commit('setUserData', data);
+ 
+        // let data = fake_user
+        console.log(`DATA: ${fake_user.id}`);
+
+        commit('setUserData', Object.from(fake_user));
       } catch (error) { console.error(error); }
     },
 

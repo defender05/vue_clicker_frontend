@@ -315,7 +315,7 @@ const toggleEnterprise = (index) => {
 }
 
 .enterprise_image {
-  height: 60%;
+  height: 90%;
   width: 60%;
   object-fit: contain;
 
@@ -339,7 +339,7 @@ const toggleEnterprise = (index) => {
   height: 130px;
   width: 100%;
   
-  background: repeat-x center url("../assets/images/background_slot_image.svg");
+  background: repeat-x center url("/src/assets/images/background_slot_image.svg");
   border: 1px solid #1F1F1F;
   border-radius: 10px;
   margin-bottom: 10px;
