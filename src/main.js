@@ -22,6 +22,7 @@ Locale.use('en-US', enUS);
 
 
 axios.defaults.withCredentials = true;
+<<<<<<< HEAD
 axios.defaults.baseURL = 'https://dev.countryballsbot.ru/api/v1/';
 // axios.defaults.baseURL = 'https://countryballsbot.ru/api/v1/'; 
 
